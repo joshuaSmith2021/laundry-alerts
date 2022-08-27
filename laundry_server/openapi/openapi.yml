@@ -36,3 +36,30 @@ paths:
                       type: string
                     time:
                       type: string
+  /get_halls:
+    get:
+      operationId: laundry_routes.get_halls
+      summary: Get all halls
+      description: |
+        Retrieves names and IDs of each hall at Cal Poly.
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  hallName:
+                    description: A hall object
+                    type: object
+                    properties:
+                      village:
+                        type: string
+                        description: The village this hall is in
+                      hallId:
+                        type: string
+                        description: The hall ID
+                      hallName:
+                        type: string
+                        description: The name of the hall

@@ -1,0 +1,7 @@
+version: "3.0"
+services:
+  laundry_server:
+    build: .
+    image: laundry_server:latest
+    ports:
+      - 5000:5000

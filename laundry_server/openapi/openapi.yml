@@ -1,0 +1,38 @@
+openapi: 3.0.0
+info:
+  title: Cal Poly Laundry Information API
+  version: 0.0.1
+paths:
+  /hall_status/{hall_id}:
+    get:
+      operationId: laundry_routes.get_hall_status
+      summary: Get status of a hall
+      description: |
+        Retrieve the current state of the machines in a single residence hall.
+      parameters:
+        - name: hall_id
+          in: path
+          required: true
+          schema:
+            type: string
+            default: 6a7d18d3-6225-417d-874f-ddc72b878219
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: Name of the machine
+                    type:
+                      type: string
+                      enum: ["Washer", "Dryer"]
+                    availability:
+                      type: string
+                    time:
+                      type: string

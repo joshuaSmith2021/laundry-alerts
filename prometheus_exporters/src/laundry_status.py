@@ -12,12 +12,25 @@ availability = Gauge('laundry_availability',
 
 availability.labels('Poly Canyon Village', 'Estrella', 'Washer').set(3)
 
-maintenance = Gauge('maintence', 'Maintenance metrics', ['job'])
+maintenance = Gauge('maintenance', 'Maintenance metrics', ['job'])
+
+failures = Gauge('failures', 'Hall failures', ['village', 'hall'])
 
 
-def update_metrics():
+def update_metrics(retries):
     halls_req = requests.get('http://localhost:5000/get_halls')
-    assert halls_req.status_code == 200
+
+    if halls_req.status_code != 200 and retries < 10:
+        # Something is wrong with get_halls, start the function again
+        print(f'halls_req failed to get a 200 response (retries={retries})')
+        print(halls_req.text)
+        update_metrics(retries + 1)
+        return
+    elif halls_req.status_code != 200:
+        # The function has failed 10 times
+        print('halls_req has failed to get a 200 response 10 times. Exiting.')
+        exit(1)
+
     halls = halls_req.json()
 
     for hall in halls.values():
@@ -28,7 +41,10 @@ def update_metrics():
         prom_labels = [village, hall_name]
 
         hall_req = requests.get(f'http://localhost:5000/hall_status/{hall_id}')
-        assert hall_req.status_code == 200, hall_id
+        if hall_req.status_code != 200:
+            # This one hall failed. Hopefully this stops
+            failures.labels(*prom_labels).set(1)
+            continue
 
         hall_data = {
             'Washer': 0,
@@ -43,12 +59,13 @@ def update_metrics():
 
         for key, value in hall_data.items():
             availability.labels(*prom_labels, key).set(value)
+            failures.labels(*prom_labels).set(0)
 
 
 start_http_server(10000)
 while True:
     start = time()
-    update_metrics()
+    update_metrics(0)
     end = time()
 
     print('Collected metrics in %.1f seconds' % (end - start))

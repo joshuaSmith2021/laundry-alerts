@@ -45,7 +45,7 @@ def get_village_halls(url: str) -> List[Tuple[str]]:
     assert req.status_code == 200, f'HTTP request received {req.status_code}'
     html = req.text
 
-    hall_pattern = re.compile(r'<td><a href=".+?location=(.+?)">(.+?)<\/a><\/td>')
+    hall_pattern = re.compile(r'<td><a href=".+?location=(.*?)"(?:.*?)>(.+?)<\/a><\/td>')
     hall_matches = hall_pattern.findall(html)
 
     return hall_matches

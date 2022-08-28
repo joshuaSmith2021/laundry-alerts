@@ -1,0 +1,9 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: laundry_status
+    honor_labels: true
+
+    static_configs:
+      - targets: ["localhost:10000"]

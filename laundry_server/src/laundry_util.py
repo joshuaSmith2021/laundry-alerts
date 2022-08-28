@@ -80,7 +80,7 @@ def get_hall_machines(html: str) -> List[Tuple[str]]:
     html = re.sub(r'<img.*?>', '', html)  # Remove img tags from html
 
     # Get machines from text
-    machine_pattern = re.compile(r'<tr class="Machine(?:.|\n)+?name">(.+?)<(?:.|\n)+?type">(.+?)<(?:.|\n)+?status">(.+?)<(?:.|\n)+?time">(.+?)<(?:.|\n)+?<\/tr>')
+    machine_pattern = re.compile(r'<tr class="Machine(?:.|\n)+?name">(.+?)<(?:.|\n)+?type">(.+?)<(?:.|\n)+?status">(.+?)<(?:.|\n)+?time">(?:<div.+?<div.+?<\/div><\/div>)?(.+?)<(?:.|\n)+?<\/tr>')
     machine_matches = machine_pattern.findall(html)
 
     machines = []
@@ -96,9 +96,9 @@ def get_hall_machines(html: str) -> List[Tuple[str]]:
 
 
 if __name__ == '__main__':
-    # foxen_id = '6a7d18d3-6225-417d-874f-ddc72b878219'
-    # html = get_hall_html(foxen_id)
-    # print(get_hall_machines(html))
+    hall_id = '676b5302-485a-4edb-8b36-a20d82a3ae20'
+    html = get_hall_html(hall_id)
+    print(get_hall_machines(html))
 
-    villages = get_villages()
-    print(get_village_halls(villages[2][0]))
+    # villages = get_villages()
+    # print(get_village_halls(villages[2][0]))

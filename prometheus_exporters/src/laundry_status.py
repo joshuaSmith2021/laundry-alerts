@@ -1,3 +1,4 @@
+import re
 from time import sleep, time
 
 import requests
@@ -10,11 +11,19 @@ availability = Gauge('laundry_availability',
                      'Machine availability at each hall',
                      ['village', 'hall', 'type'])
 
-availability.labels('Poly Canyon Village', 'Estrella', 'Washer').set(3)
+machine_time = Gauge('machine_time', 'Time remaining on each machine',
+                      ['village', 'hall', 'type', 'name'])
 
 maintenance = Gauge('maintenance', 'Maintenance metrics', ['job'])
 
 failures = Gauge('failures', 'Hall failures', ['village', 'hall'])
+
+
+def extract_time_remaining(time_string: str) -> int:
+    if match := re.match(r'\d+', time_string):
+        return int(match.group())
+    else:
+        return 0
 
 
 def update_metrics(retries):
@@ -56,6 +65,12 @@ def update_metrics(retries):
         for machine in machines:
             if machine['availability'] in AVAILABLE_STATUSES:
                 hall_data[machine['type']] += 1
+
+            time_remaining = extract_time_remaining(machine['time'])
+            current_labels = [village, hall_name, machine['type'],
+                              machine['name']]
+
+            machine_time.labels(*current_labels).set(time_remaining)
 
         for key, value in hall_data.items():
             availability.labels(*prom_labels, key).set(value)

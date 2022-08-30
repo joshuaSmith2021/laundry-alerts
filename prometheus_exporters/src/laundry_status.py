@@ -20,7 +20,7 @@ failures = Gauge('failures', 'Hall failures', ['village', 'hall'])
 
 
 def extract_time_remaining(time_string: str) -> int:
-    if match := re.match(r'\d+', time_string):
+    if match := re.search(r'\d+', time_string):
         return int(match.group())
     else:
         return 0

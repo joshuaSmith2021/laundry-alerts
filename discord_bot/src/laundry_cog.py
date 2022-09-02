@@ -84,15 +84,16 @@ class Laundry(commands.Cog):
         if not words:
             return (0, '')
 
+        top_result = (0, '')
+
         for word in words:
-            top_result = (0, '')
             for hall in self.HALL_DATA:
                 # s is the similarity score
                 s = SequenceMatcher(None, word.lower(), hall.lower()).ratio()
                 if s > top_result[0]:
                     top_result = (s, hall)
 
-            return top_result
+        return top_result
 
     def register_user(self, machine_type, ctx, *args):
         '''

@@ -102,3 +102,5 @@ if __name__ == '__main__':
 
     # villages = get_villages()
     # print(get_village_halls(villages[2][0]))
+
+    halls = [get_village_halls(x[0]) for x in villages]

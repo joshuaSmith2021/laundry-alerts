@@ -1,15 +1,14 @@
 import json
 import re
-from collections import defaultdict
 from difflib import SequenceMatcher
 
 import requests
 from redis import Redis
-from discord.ext import commands
+from discord.ext import commands, tasks
 
 
 class Laundry(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot: commands.Bot):
         self.bot = bot
         self.conn = Redis(host='localhost', port=6379, db=0)
 
@@ -49,9 +48,21 @@ class Laundry(commands.Cog):
 
         assert len(self.MACHINE_NAMES), 'Failed to get machine names'
 
-        print(self.MACHINE_NAMES)
+        self.alert_sender.start()
 
         print('Laundry Cog registered.')
+
+    async def send_message(self, user_id: int, message: str):
+        user = await self.bot.fetch_user(user_id)
+        await user.send(message)
+
+    @tasks.loop(seconds=5.0)
+    async def alert_sender(self):
+        while json_string := self.conn.lpop('discord_alerts'):
+            alert = json.loads(json_string)
+            message = alert['message']
+            user_id = alert['target']
+            await self.send_message(user_id, message)
 
     def parse_labels(self, labels: str) -> dict:
         labels = labels.strip('{}').replace('"', '')

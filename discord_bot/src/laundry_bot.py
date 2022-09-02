@@ -18,5 +18,8 @@ bot = commands.Bot(command_prefix='!', intents=intents)
 async def on_ready():
     await bot.add_cog(Laundry(bot))
 
+    activity = discord.Activity(name='!help', type=discord.ActivityType.listening)
+    await bot.change_presence(activity=activity)
+
 
 bot.run(DISCORD_TOKEN)

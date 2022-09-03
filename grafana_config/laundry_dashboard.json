@@ -33,6 +33,7 @@
         "type": "prometheus",
         "uid": "2c4pE-WVk"
       },
+      "description": "Quantity of machines available in selected residence hall",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -111,13 +112,106 @@
             "uid": "2c4pE-WVk"
           },
           "editorMode": "builder",
-          "expr": "laundry_availability{hall=\"$ResidenceHall\"}",
+          "expr": "laundry_availability{hall=\"$hall\"}",
           "legendFormat": "{{type}}",
           "range": true,
           "refId": "A"
         }
       ],
       "title": "Machine Availability",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "2c4pE-WVk"
+      },
+      "description": "Time remaining (in minutes) in each machine in selected residence hall. If a machine is available, it has a value of zero.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "2c4pE-WVk"
+          },
+          "editorMode": "builder",
+          "expr": "machine_time{hall=\"$hall\", type=~\"$type\"}",
+          "legendFormat": "{{type}} {{name}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Machine Time Remaining",
       "type": "timeseries"
     }
   ],
@@ -129,7 +223,7 @@
     "list": [
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "Foxen",
           "value": "Foxen"
         },
@@ -140,11 +234,40 @@
         "definition": "label_values(hall)",
         "hide": 0,
         "includeAll": false,
+        "label": "Residence Hall",
         "multi": false,
-        "name": "ResidenceHall",
+        "name": "hall",
         "options": [],
         "query": {
           "query": "label_values(hall)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "allValue": ".*",
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "2c4pE-WVk"
+        },
+        "definition": "label_values(type)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Machine Type",
+        "multi": false,
+        "name": "type",
+        "options": [],
+        "query": {
+          "query": "label_values(type)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -156,13 +279,13 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-90m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Laundry Dashboard",
   "uid": "BShCMBW4k",
-  "version": 4,
+  "version": 11,
   "weekStart": ""
 }

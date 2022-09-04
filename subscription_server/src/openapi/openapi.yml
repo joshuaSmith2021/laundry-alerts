@@ -1,0 +1,54 @@
+openapi: 3.0.0
+info:
+  title: Subscription Manager
+  version: 0.0.1
+paths:
+  /subscribe:
+    post:
+      operationId: subscription_routes.subscribe
+      summary: Create a new subscription
+      description: |
+        Create a new subscription to an event. If the event is already occuring, for example the machine of interest is already available, return a message stating as such.
+
+        event_key, often, will be VILLAGE.HALL.TYPE.NAME
+      parameters:
+        - name: event_key
+          in: query
+          description: Key representing the type of event
+          required: true
+          schema:
+            type: string
+        - name: fulfillment
+          in: query
+          description: How the subscription is fulfilled
+          required: true
+          schema:
+            type: string
+            enum: ["discord", "sms"]
+        - name: user
+          in: query
+          description: |
+            How to identify the subscriber (phone number, discord ID, etc)
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: Name of the machine
+                    type:
+                      type: string
+                      enum: ["Washer", "Dryer"]
+                    availability:
+                      type: string
+                    time:
+                      type: string

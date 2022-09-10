@@ -1,5 +1,5 @@
 # docker build -t exporters/laundry_status:latest .
-# docker run --network host exporters/laundry_status:latest
+# docker run --network host -d exporters/laundry_status:latest
 
 FROM python:3.10-slim-bullseye
 

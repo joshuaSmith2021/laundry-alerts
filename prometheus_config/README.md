@@ -1,0 +1,1 @@
+`docker run --network host -v /home/blue/Documents/laundry-alerts/prometheus_config/prometheus.yml:/etc/prometheus/prometheus.yml -d prom/prometheus:latest`

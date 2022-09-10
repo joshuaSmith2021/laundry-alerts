@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Subscription Manager
-  version: 0.0.1
+  version: 1.0.0
 paths:
   /subscribe:
     post:
@@ -33,22 +33,18 @@ paths:
           schema:
             type: string
       responses:
-        200:
-          description: Success
+        201:
+          description: Subscription created
           content:
-            application/json:
+            text/plain:
               schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                      description: Name of the machine
-                    type:
-                      type: string
-                      enum: ["Washer", "Dryer"]
-                    availability:
-                      type: string
-                    time:
-                      type: string
+                type: string
+                example: You will be notified when the machine is ready
+        202:
+          description: |
+            Successful request, but the requested resource is already available.
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: That machine is already available

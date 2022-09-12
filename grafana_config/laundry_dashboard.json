@@ -353,7 +353,7 @@
       "type": "timeseries"
     }
   ],
-  "refresh": false,
+  "refresh": "30s",
   "schemaVersion": 37,
   "style": "dark",
   "tags": [],
@@ -361,7 +361,7 @@
     "list": [
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "Bishop",
           "value": "Bishop"
         },
@@ -389,7 +389,7 @@
       {
         "allValue": ".*",
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "All",
           "value": "$__all"
         },
@@ -424,6 +424,6 @@
   "timezone": "",
   "title": "Laundry Dashboard",
   "uid": "BShCMBW4k",
-  "version": 1,
+  "version": 8,
   "weekStart": ""
 }

@@ -27,7 +27,7 @@ def extract_time_remaining(time_string: str) -> int:
 
 
 def update_metrics(retries):
-    halls_req = requests.get('http://localhost:5000/get_halls')
+    halls_req = requests.get('http://laundry_rest:5000/get_halls')
 
     if halls_req.status_code != 200 and retries < 10:
         # Something is wrong with get_halls, start the function again
@@ -49,7 +49,7 @@ def update_metrics(retries):
 
         prom_labels = [village, hall_name]
 
-        hall_req = requests.get(f'http://localhost:5000/hall_status/{hall_id}')
+        hall_req = requests.get(f'http://laundry_rest:5000/hall_status/{hall_id}')
         if hall_req.status_code != 200:
             # This one hall failed. Hopefully this stops
             failures.labels(*prom_labels).set(1)

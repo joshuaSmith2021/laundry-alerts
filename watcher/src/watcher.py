@@ -19,7 +19,7 @@ def parse_labels(labels: str) -> dict:
 
 
 def update_statuses(conn: redis.Redis):
-    exporter_req = requests.get('http://localhost:10000')
+    exporter_req = requests.get('http://laundry_exporter:10000')
     if exporter_req.status_code != 200:
         print('Failed to get a 200 status from exporter')
         return
@@ -88,7 +88,7 @@ def update_statuses(conn: redis.Redis):
 
 
 if __name__ == '__main__':
-    conn = redis.Redis(host='localhost', port=6379, db=0)
+    conn = redis.Redis(host='laundry_redis', port=6379, db=0)
     while True:
         update_statuses(conn)
         time.sleep(5)

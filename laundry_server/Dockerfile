@@ -3,6 +3,10 @@
 
 FROM python:3.10-slim-bullseye
 
+# Install curl, which is not available by default on python images
+RUN apt-get update && \
+    apt-get install -y curl
+
 COPY ./src /src
 
 WORKDIR /src

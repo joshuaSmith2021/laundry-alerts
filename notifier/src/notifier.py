@@ -40,5 +40,5 @@ def queue_loop(conn: redis.Redis):
 
 
 if __name__ == '__main__':
-    conn = redis.Redis(host='localhost', port=6379, db=0)
+    conn = redis.Redis(host='laundry_redis', port=6379, db=0)
     queue_loop(conn)

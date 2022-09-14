@@ -6,4 +6,4 @@ scrape_configs:
     honor_labels: true
 
     static_configs:
-      - targets: ["localhost:10000"]
+      - targets: ["laundry_exporter:10000"]

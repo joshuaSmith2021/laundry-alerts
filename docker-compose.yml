@@ -1,0 +1,69 @@
+version: "3.4"
+services:
+  laundry_rest:
+    build: ./laundry_server
+    image: laundry_server:latest
+    ports:
+      - "5000:5000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/ui"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  laundry_redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  laundry_exporter:
+    build: ./prometheus_exporters
+    image: exporters/laundry_status:latest
+    ports:
+      - "10000:10000"
+    depends_on:
+      laundry_rest:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:10000"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - /home/blue/Documents/laundry-alerts/prometheus_config/prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      laundry_exporter:
+        condition: service_healthy
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+  notifier:
+    build: ./notifier
+    image: notifier:latest
+    depends_on:
+      laundry_redis:
+        condition: service_healthy
+  watcher:
+    build: ./watcher
+    image: watcher:latest
+    depends_on:
+      laundry_exporter:
+        condition: service_healthy
+      laundry_redis:
+        condition: service_healthy
+  discord_bot:
+    build: ./discord_bot
+    image: laundry_bot:latest
+    depends_on:
+      laundry_redis:
+        condition: service_healthy
+    env_file:
+      - discord_bot/.env

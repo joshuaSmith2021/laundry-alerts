@@ -10,13 +10,13 @@ from discord.ext import commands, tasks
 class Laundry(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
-        self.conn = Redis(host='localhost', port=6379, db=0)
+        self.conn = Redis(host='laundry_redis', port=6379, db=0)
 
         # Fetch hall names
         retries = 0
         self.HALL_DATA = None
         while retries < 10:
-            req = requests.get('http://localhost:5000/get_halls')
+            req = requests.get('http://laundry_rest:5000/get_halls')
 
             if req.status_code != 200:
                 retries += 1
@@ -32,7 +32,7 @@ class Laundry(commands.Cog):
         retries = 0
         machine_pattern = re.compile(r'machine_time{(.+?)}')
         while retries < 10:
-            req = requests.get('http://localhost:10000')
+            req = requests.get('http://laundry_exporter:10000')
             if req.status_code != 200:
                 retries += 1
                 continue

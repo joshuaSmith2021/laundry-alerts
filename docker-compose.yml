@@ -10,7 +10,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-    restart: on-failure
+    restart: always
   laundry_redis:
     image: redis:latest
     ports:
@@ -20,7 +20,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-    restart: on-failure
+    restart: always
   laundry_exporter:
     build: ./prometheus_exporters
     image: exporters/laundry_status:latest
@@ -34,7 +34,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-    restart: on-failure
+    restart: always
   prometheus:
     image: prom/prometheus:latest
     ports:
@@ -44,19 +44,19 @@ services:
     depends_on:
       laundry_exporter:
         condition: service_healthy
-    restart: on-failure
+    restart: always
   grafana:
     image: grafana/grafana:latest
     ports:
       - "3000:3000"
-    restart: on-failure
+    restart: always
   notifier:
     build: ./notifier
     image: notifier:latest
     depends_on:
       laundry_redis:
         condition: service_healthy
-    restart: on-failure
+    restart: always
   watcher:
     build: ./watcher
     image: watcher:latest
@@ -65,7 +65,7 @@ services:
         condition: service_healthy
       laundry_redis:
         condition: service_healthy
-    restart: on-failure
+    restart: always
   discord_bot:
     build: ./discord_bot
     image: laundry_bot:latest
@@ -74,4 +74,4 @@ services:
         condition: service_healthy
     env_file:
       - discord_bot/.env
-    restart: on-failure
+    restart: always

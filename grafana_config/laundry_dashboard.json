@@ -24,14 +24,14 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 2,
+  "id": 1,
   "links": [],
   "liveNow": false,
   "panels": [
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "oiEBGbM4k"
+        "uid": "74rfng7Vz"
       },
       "fieldConfig": {
         "defaults": {
@@ -83,7 +83,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "oiEBGbM4k"
+            "uid": "74rfng7Vz"
           },
           "editorMode": "builder",
           "expr": "laundry_availability{hall=\"$hall\", type=~\"$type\"}",
@@ -98,7 +98,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "oiEBGbM4k"
+        "uid": "74rfng7Vz"
       },
       "fieldConfig": {
         "defaults": {
@@ -154,10 +154,10 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "oiEBGbM4k"
+            "uid": "74rfng7Vz"
           },
           "editorMode": "builder",
-          "expr": "{hall=\"$hall\", __name__=\"machine_time\"}",
+          "expr": "machine_time{hall=\"$hall\", type=~\"$type\"}",
           "legendFormat": "{{name}} ({{type}})",
           "range": true,
           "refId": "A"
@@ -169,7 +169,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "oiEBGbM4k"
+        "uid": "74rfng7Vz"
       },
       "description": "Quantity of machines available in selected residence hall",
       "fieldConfig": {
@@ -247,7 +247,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "oiEBGbM4k"
+            "uid": "74rfng7Vz"
           },
           "editorMode": "builder",
           "expr": "laundry_availability{hall=\"$hall\"}",
@@ -262,7 +262,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "oiEBGbM4k"
+        "uid": "74rfng7Vz"
       },
       "description": "Time remaining (in minutes) in each machine in selected residence hall. If a machine is available, it has a value of zero.",
       "fieldConfig": {
@@ -340,7 +340,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "oiEBGbM4k"
+            "uid": "74rfng7Vz"
           },
           "editorMode": "builder",
           "expr": "machine_time{hall=\"$hall\", type=~\"$type\"}",
@@ -362,12 +362,12 @@
       {
         "current": {
           "selected": false,
-          "text": "Bishop",
-          "value": "Bishop"
+          "text": "Foxen",
+          "value": "Foxen"
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "oiEBGbM4k"
+          "uid": "74rfng7Vz"
         },
         "definition": "label_values(hall)",
         "hide": 0,
@@ -389,13 +389,13 @@
       {
         "allValue": ".*",
         "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
+          "selected": true,
+          "text": "Washer",
+          "value": "Washer"
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "oiEBGbM4k"
+          "uid": "74rfng7Vz"
         },
         "definition": "label_values(type)",
         "hide": 0,
@@ -424,6 +424,6 @@
   "timezone": "",
   "title": "Laundry Dashboard",
   "uid": "BShCMBW4k",
-  "version": 8,
+  "version": 2,
   "weekStart": ""
 }

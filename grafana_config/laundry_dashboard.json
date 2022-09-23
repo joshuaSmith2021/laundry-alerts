@@ -157,7 +157,7 @@
             "uid": "74rfng7Vz"
           },
           "editorMode": "builder",
-          "expr": "machine_time{hall=\"$hall\", type=~\"$type\"}",
+          "expr": "machine_time{hall=\"$hall\", type=~\"$type\", name=~\"$name\"}",
           "legendFormat": "{{name}} ({{type}})",
           "range": true,
           "refId": "A"
@@ -361,7 +361,7 @@
     "list": [
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "Foxen",
           "value": "Foxen"
         },
@@ -390,8 +390,8 @@
         "allValue": ".*",
         "current": {
           "selected": true,
-          "text": "Washer",
-          "value": "Washer"
+          "text": "Dryer",
+          "value": "Dryer"
         },
         "datasource": {
           "type": "prometheus",
@@ -413,6 +413,35 @@
         "skipUrlSync": false,
         "sort": 0,
         "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "489-L",
+            "489-U"
+          ],
+          "value": [
+            "489-L",
+            "489-U"
+          ]
+        },
+        "definition": "label_values(machine_time{hall=\"$hall\", type=~\"$type\"}, name)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Machine Name",
+        "multi": true,
+        "name": "name",
+        "options": [],
+        "query": {
+          "query": "label_values(machine_time{hall=\"$hall\", type=~\"$type\"}, name)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
       }
     ]
   },
@@ -424,6 +453,6 @@
   "timezone": "",
   "title": "Laundry Dashboard",
   "uid": "BShCMBW4k",
-  "version": 2,
+  "version": 5,
   "weekStart": ""
 }

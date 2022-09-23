@@ -38,7 +38,7 @@ def update_metrics(retries):
     elif halls_req.status_code != 200:
         # The function has failed 10 times
         print('halls_req has failed to get a 200 response 10 times. Exiting.')
-        exit(1)
+        return
 
     halls = halls_req.json()
 

@@ -3,6 +3,11 @@ A collection of servers and services that work together to send Cal Poly
 students living on campus alerts when laundry machines become available on
 campus.
 
+# Usage
+`docker compose up` should make you right as rain to run everything except for
+the discord bot. To run the discord bot, make a .env file in discord_bot/
+containing a discord bot token, defined in .env as DISCORD_TOKEN.
+
 ### tech stack
 - laundry_server is a connexion flask app using openapi specification. This server fetches data from the washalert website and uses regex to scrape the machine data from the webpage. This server runs in a docker container.
 - prometheus\_exporters is a [prometheus exporter](https://prometheus.io/docs/instrumenting/exporters/) written in Python. It calls the laundry\_server for data. This script runs in a docker container.

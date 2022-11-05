@@ -31,7 +31,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "74rfng7Vz"
+        "uid": "3YqbMXn4k"
       },
       "fieldConfig": {
         "defaults": {
@@ -83,10 +83,10 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "74rfng7Vz"
+            "uid": "3YqbMXn4k"
           },
           "editorMode": "builder",
-          "expr": "laundry_availability{hall=\"$hall\", type=~\"$type\"}",
+          "expr": "laundry_availability{hall=\"$hall\"}",
           "legendFormat": "{{type}}",
           "range": true,
           "refId": "A"
@@ -98,7 +98,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "74rfng7Vz"
+        "uid": "3YqbMXn4k"
       },
       "fieldConfig": {
         "defaults": {
@@ -154,7 +154,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "74rfng7Vz"
+            "uid": "3YqbMXn4k"
           },
           "editorMode": "builder",
           "expr": "machine_time{hall=\"$hall\", type=~\"$type\", name=~\"$name\"}",
@@ -169,7 +169,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "74rfng7Vz"
+        "uid": "3YqbMXn4k"
       },
       "description": "Quantity of machines available in selected residence hall",
       "fieldConfig": {
@@ -247,7 +247,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "74rfng7Vz"
+            "uid": "3YqbMXn4k"
           },
           "editorMode": "builder",
           "expr": "laundry_availability{hall=\"$hall\"}",
@@ -262,7 +262,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "74rfng7Vz"
+        "uid": "3YqbMXn4k"
       },
       "description": "Time remaining (in minutes) in each machine in selected residence hall. If a machine is available, it has a value of zero.",
       "fieldConfig": {
@@ -340,7 +340,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "74rfng7Vz"
+            "uid": "3YqbMXn4k"
           },
           "editorMode": "builder",
           "expr": "machine_time{hall=\"$hall\", type=~\"$type\"}",
@@ -361,13 +361,13 @@
     "list": [
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "Foxen",
           "value": "Foxen"
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "74rfng7Vz"
+          "uid": "3YqbMXn4k"
         },
         "definition": "label_values(hall)",
         "hide": 0,
@@ -395,7 +395,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "74rfng7Vz"
+          "uid": "3YqbMXn4k"
         },
         "definition": "label_values(type)",
         "hide": 0,
@@ -419,12 +419,18 @@
           "selected": true,
           "text": [
             "489-L",
-            "489-U"
+            "493-L",
+            "543-L"
           ],
           "value": [
             "489-L",
-            "489-U"
+            "493-L",
+            "543-L"
           ]
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "3YqbMXn4k"
         },
         "definition": "label_values(machine_time{hall=\"$hall\", type=~\"$type\"}, name)",
         "hide": 0,
@@ -453,6 +459,6 @@
   "timezone": "",
   "title": "Laundry Dashboard",
   "uid": "BShCMBW4k",
-  "version": 5,
+  "version": 2,
   "weekStart": ""
 }

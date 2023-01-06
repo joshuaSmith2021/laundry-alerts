@@ -3,6 +3,13 @@ A collection of servers and services that work together to send Cal Poly
 students living on campus alerts when laundry machines become available on
 campus.
 
+# Note
+Unfortunately, Cal Poly launched a mobile application that manages machine info,
+and the website from which I formerly scraped data has been taken down. Unfortunately,
+this means that [the laundry data server](https://github.com/joshuaSmith2021/laundry-alerts/tree/master/laundry_server)
+is broken. Fortunately, writing a new web scraper would fix the entire project, which
+is up next on the todo list for this project.
+
 # Usage
 `docker compose up` should make you right as rain to run everything except for
 the discord bot. To run the discord bot, make a .env file in discord_bot/

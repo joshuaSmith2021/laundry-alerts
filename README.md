@@ -4,7 +4,7 @@ students living on campus alerts when laundry machines become available on
 campus.
 
 # Note
-Unfortunately, Cal Poly launched a mobile application that manages machine info,
+Unfortunately, Cal Poly recently launched a mobile application that provides machine info,
 and the website from which I formerly scraped data has been taken down. Unfortunately,
 this means that [the laundry data server](https://github.com/joshuaSmith2021/laundry-alerts/tree/master/laundry_server)
 is broken. Fortunately, writing a new web scraper would fix the entire project, which
